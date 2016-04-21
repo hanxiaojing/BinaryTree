@@ -1,0 +1,51 @@
+public:
+{
+  void _Destroy(Node* root)
+	{
+		if (root == NULL)
+		{
+			return;
+		}
+		if (root->_left == NULL && root->_right == NULL)
+		{
+			delete root;
+			root = NULL;
+			return;
+		}
+		_Destroy(root->_left);
+		_Destroy(root->_right);
+	}
+}
+
+
+protected:
+{
+	Node* _Copy(Node* troot)
+	{
+		if (troot == NULL)
+		{
+			return NULL;
+		}
+
+		Node* root = new Node(troot->_data);
+
+		root->_left = _Copy(troot->_left);
+		root->_right = _Copy(troot->_right);
+		return root;
+	 }
+	}
+	
+	
+	BinaryTree<T>(const BinaryTree<T>& t)
+		: _root(NULL)
+	{
+		_root = _Copy(t._root);
+	}
+	
+	~BinaryTree()
+	{
+		if (_root)
+		{
+			_Destroy(_root);
+		}
+	}
